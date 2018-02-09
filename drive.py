@@ -5,7 +5,9 @@ import os
 import shutil
 
 import numpy as np
+
 import socketio
+
 import eventlet
 import eventlet.wsgi
 from PIL import Image
@@ -13,8 +15,10 @@ from flask import Flask
 from io import BytesIO
 
 from keras.models import load_model
+from keras.backend import tf as ktf
 import h5py
 from keras import __version__ as keras_version
+
 
 sio = socketio.Server()
 app = Flask(__name__)
@@ -44,7 +48,7 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 19
 controller.set_desired(set_speed)
 
 
@@ -119,7 +123,7 @@ if __name__ == '__main__':
         print('You are using Keras version ', keras_version,
               ', but the model was built using ', model_version)
 
-    model = load_model(args.model)
+    model = load_model(args.model, custom_objects={"ktf": ktf})
 
     if args.image_folder != '':
         print("Creating image folder at {}".format(args.image_folder))
