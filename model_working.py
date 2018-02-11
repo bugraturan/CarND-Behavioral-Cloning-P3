@@ -139,7 +139,7 @@ def generator(samples, batch_size=128, augment=True):
                 center_image = cv2.imread(current_path)
 
                 #convert to YUV
-                center_image = cv2.cvtColor(center_image, cv2.COLOR_BGR2YUV)
+                #center_image = cv2.cvtColor(center_image, cv2.COLOR_BGR2YUV)
                 center_angle = float(batch_sample[3])
 
                 #append original data

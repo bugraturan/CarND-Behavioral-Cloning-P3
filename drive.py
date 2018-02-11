@@ -15,7 +15,11 @@ from flask import Flask
 from io import BytesIO
 
 from keras.models import load_model
-from keras.backend import tf as ktf
+
+
+from keras.backend import tf as ktf #edit
+import cv2 #edit
+
 import h5py
 from keras import __version__ as keras_version
 
@@ -48,7 +52,7 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 19
+set_speed = 19 #edit
 controller.set_desired(set_speed)
 
 
@@ -65,6 +69,7 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
+        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2YUV) #edit
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
